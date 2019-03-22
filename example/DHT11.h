@@ -19,7 +19,7 @@
 #define DHT11_OK		0xFF
 #define DHT11_ERROR		0x00
 
-uint8_t DHT11_getData(int16_t* temperature, uint8_t* humidity);
+uint8_t DHT11_getData(int8_t* temperature, uint8_t* humidity);
 uint8_t DHT11_readByte(void);
 
 #endif /* DHT11_H_ */

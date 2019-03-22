@@ -4,7 +4,7 @@
 
 DHT11.c
 
-DHT_test.c
+DHTdemo.c
 
 USART.c
 

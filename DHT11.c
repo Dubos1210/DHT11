@@ -1,9 +1,8 @@
 /*
- * DHT11 AVR C library
- * Author: Vladimir Dubos
- * http://dubos.tech
- * http://github.com/Dubos1210/DHT11
+ * DHT11.c
  *
+ * Created: 21.03.2019 15:24:13
+ *  Author: Vladimir
  */
 
 #include "settings.h"
@@ -12,7 +11,7 @@
 #include <stdint.h>
 #include "DHT11.h"
 
-uint8_t DHT11_getData(int16_t* temperature, uint8_t* humidity) {
+uint8_t DHT11_getData(int8_t* temperature, uint8_t* humidity) {
 	//Setting pins
 	DHT_DDR &=~ (1<<DHT_WIRE);
 	DHT_PORT &=~ (1<<DHT_WIRE);
@@ -36,19 +35,19 @@ uint8_t DHT11_getData(int16_t* temperature, uint8_t* humidity) {
 	
 	//Data bytes
 	uint8_t DHT11_RH_integral = DHT11_readByte();
-	uint8_t DHT11_RH_decimal  = DHT11_readByte();
+	DHT11_readByte();
 	uint8_t DHT11_T_integral  = DHT11_readByte();
-	uint8_t DHT11_T_decimal   = DHT11_readByte();
-	uint8_t DHT11_checksum    = DHT11_readByte();
+	DHT11_readByte();
 	
-	#if DHT11_CHECKSUM	
+	#if DHT11_CHECKSUM
+		uint8_t DHT11_checksum    = DHT11_readByte();
 		uint8_t DHT11_checksum_my = DHT11_RH_integral;
-		DHT11_checksum_my += DHT11_RH_decimal;
 		DHT11_checksum_my += DHT11_T_integral;
-		DHT11_checksum_my += DHT11_T_decimal;
 		if(DHT11_checksum_my != DHT11_checksum) {
 			return DHT11_ERROR;
 		}
+	#else
+		DHT11_readByte();
 	#endif
 	
 	*humidity = DHT11_RH_integral;
@@ -59,7 +58,8 @@ uint8_t DHT11_getData(int16_t* temperature, uint8_t* humidity) {
 
 uint8_t DHT11_readByte(void) {
 	uint8_t DHT11_counter = 0;
-	uint8_t DHT11_data = 0x00;
+	uint8_t DHT11_data = 0x00;	
+	DHT_DDR &=~ (1<<DHT_WIRE);
 	for(int DHT11_i = 7; DHT11_i >= 0; DHT11_i--) {
 		DHT11_counter = 0;
 		while(!(DHT_PIN & (1<<DHT_WIRE)) && (DHT11_counter < 10)) {
