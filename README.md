@@ -4,7 +4,7 @@
 
   + __example__ - демонстрационный проект  
   Микроконтроллер: Atmel ATmega328P (Arduino UNO). Шина данных датчика подключена к выводу PD2 (2 контакт платы Arduino)  
-  ![Схема подключения для тестовой программы](http://github.com/Dubos1210/DHT11/blob/master/img/sch.jpg)  
+  ![Схема подключения для тестовой программы](https://github.com/Dubos1210/DHT11/blob/master/img/sch.jpg)  
   Проект создан в Atmel Studio 6.2
   
   + __DHT11.h__ и __DHT11.c__ - файлы библиотеки. Занести в Solution Explorer, файл _DHT11.h_ подключить в строке _#define_
