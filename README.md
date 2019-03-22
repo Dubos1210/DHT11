@@ -9,7 +9,7 @@
   
   + __DHT11.h__ и __DHT11.c__ - файлы библиотеки. Занести в Solution Explorer, файл _DHT11.h_ подключить в строке _#define_
   ```c	
-  int16_t DHT11_temperature;                          //Переменная для хранения темературы
+  int8_t DHT11_temperature;                          //Переменная для хранения темературы
   uint8_t DHT11_humidity;                             //Переменная для хранения влажности
   DHT11_getData(&DHT11_temperature, &DHT11_humidity); //Чтение данных с датчика и запись в переменные
   ```
