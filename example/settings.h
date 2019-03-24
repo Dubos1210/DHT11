@@ -11,4 +11,9 @@
 
 #define F_CPU 16000000UL
 
+#define SPK_EN	 1
+#define SPK_WIRE 3
+#define SPK_DDR	 DDRD
+#define SPK_PORT PORTD
+
 #endif /* SETTINGS_H_ */

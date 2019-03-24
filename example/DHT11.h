@@ -14,8 +14,6 @@
 #define DHT_PORT		PORTD
 #define DHT_PIN			PIND
 
-#define DHT11_CHECKSUM	true
-
 #define DHT11_OK		0xFF
 #define DHT11_ERROR		0x00
 

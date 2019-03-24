@@ -38,17 +38,7 @@ uint8_t DHT11_getData(int8_t* temperature, uint8_t* humidity) {
 	DHT11_readByte();
 	uint8_t DHT11_T_integral  = DHT11_readByte();
 	DHT11_readByte();
-	
-	#if DHT11_CHECKSUM
-		uint8_t DHT11_checksum    = DHT11_readByte();
-		uint8_t DHT11_checksum_my = DHT11_RH_integral;
-		DHT11_checksum_my += DHT11_T_integral;
-		if(DHT11_checksum_my != DHT11_checksum) {
-			return DHT11_ERROR;
-		}
-	#else
-		DHT11_readByte();
-	#endif
+	DHT11_readByte();
 	
 	*humidity = DHT11_RH_integral;
 	*temperature = DHT11_T_integral;

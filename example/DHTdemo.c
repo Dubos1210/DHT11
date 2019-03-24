@@ -24,16 +24,63 @@ int main(void)
 	USART_init(38400);
 	USART_send_string("DHT11 tester\r\n");	
 	
+	
+	#if SPK_EN	
+		SPK_DDR |= (1<<SPK_WIRE);
+		
+		for(int i = 0; i < 50; i++) {
+			SPK_PORT |= (1<<SPK_WIRE);
+			_delay_ms(1);
+			SPK_PORT &=~ (1<<SPK_WIRE);
+			_delay_ms(1);
+		}
+		_delay_ms(10);
+		for(int i = 0; i < 50; i++) {
+			SPK_PORT |= (1<<SPK_WIRE);
+			_delay_ms(1);
+			SPK_PORT &=~ (1<<SPK_WIRE);
+			_delay_ms(1);
+		}
+		_delay_ms(10);
+		for(int i = 0; i < 50; i++) {
+			SPK_PORT |= (1<<SPK_WIRE);
+			_delay_ms(1);
+			SPK_PORT &=~ (1<<SPK_WIRE);
+			_delay_ms(1);
+		}
+		SPK_PORT &=~ (1<<SPK_WIRE);
+	#endif
+	
     while(1)
     {
 	    if(DHT11_getData(&temp, &hum)) {		
 			//sprintf(buf, "T: %i C\t H: %u%%\r\n", temp, hum);
-			sprintf(buf, "$%i;%u\r\n", temp, hum);
+			sprintf(buf, "$%d %d;\r\n", temp, hum);
 			USART_send_string(buf);
+			
+			#if SPK_EN
+				for(int i = 0; i < 25; i++) {
+					SPK_PORT |= (1<<SPK_WIRE);
+					_delay_us(500);
+					SPK_PORT &=~ (1<<SPK_WIRE);
+					_delay_us(500);
+				}
+				SPK_PORT &=~ (1<<SPK_WIRE);			
+			#endif
 		}
 		else {			
 			USART_send_string("DHT11 error\r\n");
+			
+			#if SPK_EN
+				for(int i = 0; i < 1000; i++) {
+					SPK_PORT |= (1<<SPK_WIRE);
+					_delay_us(500);
+					SPK_PORT &=~ (1<<SPK_WIRE);
+					_delay_us(500);
+				}
+				SPK_PORT &=~ (1<<SPK_WIRE);
+			#endif
 		}
-		_delay_ms(2000);
+		_delay_ms(10000);
     }
 }
